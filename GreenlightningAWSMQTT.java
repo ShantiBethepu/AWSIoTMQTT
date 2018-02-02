@@ -6,6 +6,8 @@ import com.ociweb.pronghorn.network.TLSCertificates;
 public class GreenlightningAWSMQTT implements GreenApp
 {
     MQTTBridge mqttBridge;
+    String CliendId="<your client ID>"; //clientID can be your AWS thing name
+
     @Override
     public void declareConfiguration(Builder builder) {
 
@@ -49,22 +51,17 @@ public class GreenlightningAWSMQTT implements GreenApp
     public void declareBehavior(GreenRuntime runtime) {
 
         System.out.println("-------------- begin Declare behavior--------------");
-
         MQTTQoS QoS=MQTTQoS.atLeastOnce;
         String topic="<your topic>";
-
-
+        //publishes the topic
         Publish publish=new Publish(runtime,topic);
         runtime.registerListener(publish);
         runtime.bridgeTransmission(topic,mqttBridge);
-
-
+        //subscribes the topic
         Subscribe subscribe=new Subscribe(runtime,topic);
         runtime.registerListener(subscribe).addSubscription(topic,subscribe::recvmesg);
         runtime.bridgeTransmission(topic,mqttBridge);
         runtime.bridgeSubscription(topic,mqttBridge).setQoS(QoS);
         System.out.println("-------------- end Declare behavior--------------");
-
     }
-
 }
