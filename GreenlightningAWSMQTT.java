@@ -20,12 +20,12 @@ public class GreenlightningAWSMQTT implements GreenApp
                 .useTLS(new TLSCertificates() {
                     @Override
                     public String keyStoreResourceName() {
-                        return "<your keystore>";
+                        return "<your keystore>"; //keystore has the certificate and the private key from AWS
                     }
 
                     @Override
                     public String trustStroreResourceName() {
-                        return "<your truststore>";
+                        return "<your truststore>"; //truststore has RootCA from AWS
                     }
 
                     @Override
