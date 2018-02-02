@@ -5,10 +5,7 @@ import com.ociweb.gl.api.*;
 public class Publish implements StartupListener, PubSubMethodListener {
     GreenCommandChannel cmd;
     String publishtopic;
-    Writable message = writer -> writer.writeUTF("{\n" +
-            "  \"message\": \"Hello from GreenLightning \"\n" +
-            "} ");
-
+    Writable message = writer -> writer.writeUTF("{\n" +"  \"message\": \"Hello from GreenLightning \"\n" +"} ");
     public Publish(GreenRuntime runtime, String topic)
     {
         System.out.println("\nOk, this is in mqttbehavior");
