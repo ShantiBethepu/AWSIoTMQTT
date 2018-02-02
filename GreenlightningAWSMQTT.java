@@ -6,13 +6,11 @@ import com.ociweb.pronghorn.network.TLSCertificates;
 public class GreenlightningAWSMQTT implements GreenApp
 {
     MQTTBridge mqttBridge;
-    String CliendId="GreenLightningThing";
-
     @Override
     public void declareConfiguration(Builder builder) {
 
         System.out.println("-------------- begin Declare configuration--------------");
-        String host="a235s0ler27298.iot.us-east-1.amazonaws.com";
+        String host="<your API Endpoint>";
         int port=8883;
 
         mqttBridge=builder.useMQTT(host,port,CliendId)
@@ -20,22 +18,22 @@ public class GreenlightningAWSMQTT implements GreenApp
                 .useTLS(new TLSCertificates() {
                     @Override
                     public String keyStoreResourceName() {
-                        return "/certificate/CertandKey.p12";
+                        return "<your keystore>";
                     }
 
                     @Override
                     public String trustStroreResourceName() {
-                        return "/certificate/TrustStore.jks";
+                        return "<your truststore>";
                     }
 
                     @Override
                     public String keyStorePassword() {
-                        return "nopassword";
+                        return "<your keystore password>";
                     }
 
                     @Override
                     public String keyPassword() {
-                        return "nopassword";
+                        return "<your truststore password>";
                     }
 
                     @Override
@@ -53,13 +51,13 @@ public class GreenlightningAWSMQTT implements GreenApp
         System.out.println("-------------- begin Declare behavior--------------");
 
         MQTTQoS QoS=MQTTQoS.atLeastOnce;
-        String topic="$aws/things/MqttThing/shadow/get";
-/*
+        String topic="<your topic>";
+
 
         Publish publish=new Publish(runtime,topic);
         runtime.registerListener(publish);
         runtime.bridgeTransmission(topic,mqttBridge);
-*/
+
 
         Subscribe subscribe=new Subscribe(runtime,topic);
         runtime.registerListener(subscribe).addSubscription(topic,subscribe::recvmesg);
@@ -70,18 +68,3 @@ public class GreenlightningAWSMQTT implements GreenApp
     }
 
 }
-
-
-
-
-/*String topic="$aws/things/MqttThing/shadow/get";
-        MQTTBehavior mqttBehavior=new MQTTBehavior(runtime,topic);
-       // runtime.registerListener(mqttBehavior);
-        runtime.bridgeTransmission(topic,mqttBridge);
-        runtime.bridgeSubscription(topic,mqttBridge);
-        runtime.registerListener(mqttBehavior).addSubscription(topic,mqttBehavior::recvmesg);*/
-// runtime.addPubSubListener(mqttBehavior,topic);
-// runtime.registerListener(mqttBehavior);
-// runtime.addPubSubListener(mqttBehavior);
-//  runtime.registerListener(mqttBehavior)
-
