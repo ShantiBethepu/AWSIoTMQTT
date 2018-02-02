@@ -18,6 +18,7 @@ public class GreenlightningAWSMQTT implements GreenApp
         mqttBridge=builder.useMQTT(host,port,CliendId)
                 .cleanSession(true)
                 .useTLS(new TLSCertificates() {
+                    //put all your certs in the resources folder
                     @Override
                     public String keyStoreResourceName() {
                         return "<your keystore>"; //keystore has the certificate and the private key from AWS. can be jks/ p12 format
